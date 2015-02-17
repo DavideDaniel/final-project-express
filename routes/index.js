@@ -3,7 +3,6 @@ var sqlite3 = require( 'sqlite3' )
 	.verbose();
 var db = new sqlite3.Database( "patients.db" );
 var bcrypt = require( "bcrypt" );
-var fs = require( "fs" );
 var router = express.Router();
 
 html_dir = './html/'
@@ -16,23 +15,21 @@ router.get( '/', function ( req, res, next ) {
 //GET all patients on provider route
 router.get( '/provider', function ( req, res, next ) {
 	// res.sendfile( html_dir + 'provider.html' )
-	res.sendfile(html_dir+'provider.html')
+	res.sendfile( html_dir + 'provider.html' )
 
 } );
 
 //GET 1 patient
-router.get('/patients/:id', function(req, res, next) {
- var id = req.params.id;
- db.all( "SELECT * FROM patients where id = ?", id, function ( err, rows ) {
+router.get( '/patients/:id', function ( req, res ) {
+	var id = req.params.id;
+	db.all( "SELECT * FROM patients where id = ?", id, function ( err, rows ) {
 		if ( err ) {
 			throw err;
 		}
-		var patient = JSON.stringify(rows)
-		console.log(patient);
-		res.sendfile(html_dir+'consumer.html')
+		var patient = JSON.stringify( rows )
+		console.log( patient );
+		res.sendfile( html_dir + 'consumer.html' )
 	} );
-
- 
 
 } );
 
@@ -81,11 +78,11 @@ router.delete( '/patients/:id', function ( req, res ) {
 } );
 //UPDATE a patiend with :id
 router.put( "/patients/:id", function ( req, res ) {
-	console.log("INSIDE THE EDIT ROUTE");
+	console.log( "INSIDE THE EDIT ROUTE" );
 	var id = req.params.id;
 	var name = req.body.name;
 	var dob = req.body.dob;
-console.log(name+" born on "+dob);
+	console.log( name + " born on " + dob );
 	db.run( "UPDATE patients SET name = ?, dob = ? WHERE id = ?", name, dob, id,
 		function ( err ) {
 			if ( err ) {

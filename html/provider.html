@@ -10,6 +10,7 @@
         <script src = "./javascripts/models/patient.js"></script>
         <script src = "./javascripts/collections/patient_collection.js"></script>
         <script src = "./javascripts/views/patient_view.js"></script>
+
         <ul id="patientsList"></ul>
         <h3>Provider: Add a patient here:</h3>
         <div id = "addPatientForm">
@@ -32,6 +33,11 @@
                             value = "<%= patient.dob %>"> 
                         <button class = "updateButton">Update</button>
                     </span>
+        </script>
+
+        <script id="consumer">
+        <h1 class = "patient">
+        <%= patient.name  %>
         </script>
 
         

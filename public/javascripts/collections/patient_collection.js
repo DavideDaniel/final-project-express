@@ -7,5 +7,6 @@ var PatientsCollection = Backbone.Collection.extend( {
 
 var patients = new PatientsCollection();
 
+
 patients.fetch();
-console.log(patients);
+

@@ -21,12 +21,13 @@ router.get('/consumer', function(req, res, next) {
 //GET 1 patient
 router.get('/patients/:id', function(req, res, next) {
  var id = req.params.id;
- var patient = db.all( "SELECT * FROM patients where id = ?", id, function ( err, rows ) {
+db.all( "SELECT * FROM patients where id = ?", id, function ( err, rows ) {
 		if ( err ) {
 			throw err;
 		}
-		
-		res.render('consumer.ejs', {patient: patient});
+	var strPatient = JSON.stringify(rows[0])		
+	console.log(strPatient);
+		res.render('consumer.ejs', {patient: strPatient});
 	} );
 
  

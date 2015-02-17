@@ -29,7 +29,14 @@ $( document )
 			events: {
 				'click .deleteButton': 'deletePatient',
 				'click .editButton': 'editPatient',
-				'click .updateButton': 'updatePatient'
+				'click .updateButton': 'updatePatient',
+				'click .viewPatient': 'viewPatient'
+			},
+
+			viewPatient: function () {
+				var consumerView = new ConsumersView( {
+
+				} )
 			},
 
 			editPatient: function () {
@@ -48,10 +55,14 @@ $( document )
 				this.model.set( {
 					name: newName,
 					dob: newDob
+				}, {
+					validate: true
 				} );
 				this.model.save( {
 					name: newName,
 					dob: newDob
+				}, {
+					validate: true
 				} );
 			},
 
@@ -68,6 +79,40 @@ $( document )
 				return this
 			}
 		} );
+
+		var ConsumerView = Backbone.View.extend({
+			tagName: ".patient",
+			template: _.template( $( '#consumer' )
+				.html() ),
+
+
+			initialize: function () {
+				this.listenTo( this.collection, 'sync remove', this.render );
+			},
+
+			render: function () {
+				var el = this.$el;
+				el.html( '' );
+				this.collection.each( function ( patient ) {
+					el.append( new ConsumerView( {
+							model: patient
+						} )
+						.render()
+						.el );
+				} )
+				return this;
+			},
+
+				this.$el.html( _.template( this.template( {
+						patient: this.model.toJSON()
+					} ) )
+
+				)
+				return this
+			}
+
+
+		})
 
 		var CreatePatientView = Backbone.View.extend( {
 			el: '#addPatientForm',
@@ -94,22 +139,12 @@ $( document )
 		var createPatientView = new CreatePatientView( {
 			collection: patients
 		} );
+
 		var patientsView = new PatientsView( {
 			collection: patients
 		} );
 
-		var ConsumerPatientView = Backbone.View.extend({
-			el: '#consumer',
-			template: _.template( $( '#patientTemplate' )
-				.html() ),
-			render: function () {
-				this.$el.html( _.template( this.template( {
-						patient: this.model.toJSON()
-					} ) )
-
-				)
-				return this
-			}
-		})
-
-	} )
+		var consumerView = new ConsumerView( {
+			collection: patients
+		} );
+	} );

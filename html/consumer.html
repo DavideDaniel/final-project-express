@@ -10,17 +10,18 @@
     <body>
     <script src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
         <script src="http://documentcloud.github.com/backbone/backbone-min.js"></script>
-<script src = "../javascripts/models/patient.js"></script>
+        <script src = "./javascripts/backbone-relational.js"></script>
+        <script src = "../javascripts/models/patient.js"></script>
         <script src = "../javascripts/collections/patient_collection.js"></script>
         <script src = "../javascripts/views/patient_view.js"></script>
 </script>
 	<h1>You're at consumer</h1>
-<script type = "text/template" id = "patientTemplate">
-     <span class = "patient">
-                        <%= patient.name %> was born on <%= patient.dob %>
-                        </span>    
-</script>
 
-	
+<script type="text/template" id="patientTemplate"></script>
+ <script type= "text/template" id="consumer">
+        <h1 class = "patient">
+        <%= patient.name  %></h1>
+        </script>
+
 </body>
 </html>
