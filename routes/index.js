@@ -20,6 +20,20 @@ router.get( '/provider', function ( req, res, next ) {
 
 } );
 
+//GET 1 patient
+router.get('/patients/:id', function(req, res, next) {
+ var id = req.params.id;
+ db.all( "SELECT * FROM patients where id = ?", id, function ( err, rows ) {
+		if ( err ) {
+			throw err;
+		}
+		res.json( rows );
+	} );
+
+ res.sendfile(html_dir+'consumer.html')
+
+} );
+
 //CRUD routes for patients - admin side
 //GET all patients
 router.get( '/patients', function ( req, res ) {
