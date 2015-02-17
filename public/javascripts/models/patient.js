@@ -1,10 +1,6 @@
 console.log( "patient" );
 var Patient = Backbone.Model.extend( {
 
-	age: function () {
-		return ( new Date() - this.get( 'dob' ) )
-	},
-
 	initialize: function () {
 		console.log( "Patient profile created" );
 		this.on( 'change', function () {

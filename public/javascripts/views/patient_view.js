@@ -1,4 +1,4 @@
-console.log('view');
+console.log( 'view' );
 $( document )
 	.ready( function () {
 		var PatientsView = Backbone.View.extend( {
@@ -32,16 +32,27 @@ $( document )
 				'click .updateButton': 'updatePatient'
 			},
 
-			editPatient: function() {
-				this.$('.patient').hide();
-				this.$('.editForm').show();
+			editPatient: function () {
+				this.$( '.patient' )
+					.hide();
+				this.$( '.editForm' )
+					.show();
 			},
 
-			updatePatient: function() {
-				var newName = this.$('#newName' + this.model.id).val();
-				var newDob = this.$('#newDob' + this.model.id).val();
-				this.model.set({name: newName, dob: newDob});
-				this.model.save;
+			updatePatient: function () {
+
+				var newName = this.$( '#newName' + this.model.id )
+					.val();
+				var newDob = this.$( '#newDob' + this.model.id )
+					.val();
+				this.model.set( {
+					name: newName,
+					dob: newDob
+				} );
+				this.model.save( {
+					name: newName,
+					dob: newDob
+				} );
 			},
 
 			deletePatient: function () {
