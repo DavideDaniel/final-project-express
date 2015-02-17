@@ -98,4 +98,18 @@ $( document )
 			collection: patients
 		} );
 
+		var ConsumerPatientView = Backbone.View.extend({
+			el: '#consumer',
+			template: _.template( $( '#patientTemplate' )
+				.html() ),
+			render: function () {
+				this.$el.html( _.template( this.template( {
+						patient: this.model.toJSON()
+					} ) )
+
+				)
+				return this
+			}
+		})
+
 	} )

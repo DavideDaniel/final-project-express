@@ -13,7 +13,7 @@ router.get( '/', function ( req, res, next ) {
 		// 			title: 'Express'
 	} )
 } );
-
+//GET all patients on provider route
 router.get( '/provider', function ( req, res, next ) {
 	// res.sendfile( html_dir + 'provider.html' )
 	res.sendfile(html_dir+'provider.html')
@@ -27,10 +27,12 @@ router.get('/patients/:id', function(req, res, next) {
 		if ( err ) {
 			throw err;
 		}
-		res.json( rows );
+		var patient = JSON.stringify(rows)
+		console.log(patient);
+		res.sendfile(html_dir+'consumer.html')
 	} );
 
- res.sendfile(html_dir+'consumer.html')
+ 
 
 } );
 
