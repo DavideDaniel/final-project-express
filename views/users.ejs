@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Users</title>
+</head>
+<body>
+<script src="javascripts/models/patient.js"></script>
+<script src="javascripts/collections/patient_collection.js"></script>
+<script src="javascripts/views/patient_view.js">var template = _.template(document.getElementById("consumerTemplate").innerHTML);
+document.write(template({patient: {}}))
+</script>
+	<h1>You're at users</h1>
+<div id="patientTemplate"></div>
+
+<script type = "text/template" id = "consumerTemplate">
+      <h1>Welcome <%= patients.name %></h1>
+    </script>
+ 
+ <script>
+      var template = _.template(document.getElementById("consumerTemplate").innerHTML);
+      document.write(template({person: {name: "Ron Burgendy", hobbies: ["Reporting the news", "Playing the jazz flute", "jogging"]}}));
+      </script>
+</body>
+</html>
