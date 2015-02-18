@@ -4,7 +4,6 @@ ModelsRouter = Backbone.Router.extend( {
 
         "patients": "show_patient_list",
         "patient/:_id/": "show_patient",
-        console.log('inside the router')
     },
 
     show_patient_list: function () {

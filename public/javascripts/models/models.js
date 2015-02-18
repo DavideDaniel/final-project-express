@@ -1,14 +1,15 @@
 console.log( "provider" );
 var Provider = Backbone.RelationalModel.extend( {
 
-    urlRoot: 'http://localhost:3000/provider',
+    urlRoot: 'http://localhost:3000/doctor',
     idAttribute: '_id',
     relations: [ {
         type: Backbone.HasMany,
         key: 'patients',
+
         relatedModel: Patient,
         includeInJSON: 'name',
-        includeInJSON: Backbone.Model.prototype.idAttribute,
+        includeInJSON: 'idAttribute',
         reverseRelation: {
             type: Backbone.HasOne,
             key: 'board',
@@ -42,15 +43,15 @@ var Patient = Backbone.RelationalModel.extend( {
     urlRoot: 'http://localhost:3000/patient',
     idAttribute: '_id',
     relations: [ {
-        type: Backbone.HasMany,
-        key: 'boards',
-        relatedModel: Board,
-        includeInJSON: 'name',
+        // type: Backbone.HasMany,
+        // key: 'boards',
+        // relatedModel: Board,
+        // includeInJSON: 'name',
         collectionType: 'PatientCollection',
         reverseRelation: {
             type: Backbone.HasOne,
             key: 'doctor',
-            relatedModel: 'Provider',
+            relatedModel: Provider,
             includeInJSON: 'name'
 
         }
@@ -60,6 +61,7 @@ var Patient = Backbone.RelationalModel.extend( {
         console.log( "Patient profile created" );
         this.on( 'change', function () {
             console.log( 'Patient profile changed' );
+            console.log( this );
         } );
         this.on( "invalid", function ( model, error ) {
             console.log( 'ERROR ERROR ERROR' + '\n' + error );
@@ -83,19 +85,19 @@ var Board = Backbone.RelationalModel.extend( {
 
     urlRoot: 'http://localhost:3000/board',
     idAttribute: '_id',
-    relations: [ {
-        type: Backbone.HasOne,
-        key: 'patient',
-        relatedModel: Patient,
-        includeInJSON: 'name',
-        reverseRelation: {
-            type: Backbone.HasOne,
-            key: 'board',
-            relatedModel: Board,
-            includeInJSON: 'name'
+    // relations: [ {
+    //     type: Backbone.HasOne,
+    //     key: 'patient',
+    //     relatedModel: Patient,
+    //     includeInJSON: 'name',
+    //     reverseRelation: {
+    //         type: Backbone.HasOne,
+    //         key: 'board',
+    //         relatedModel: Board,
+    //         includeInJSON: 'name'
 
-        }
-    } ],
+    //     }
+    // } ],
 
     initialize: function () {
         console.log( "Board profile created" );
@@ -132,6 +134,11 @@ console.log('PatientsCollection');
 } );
 
 var patients = new PatientsCollection();
+var patient = new Patient();
+var doctor = new Provider();
+var board = new Board();
+var card = new Card();
+
 
 // console.log('patients fetch');
-// patients.fetch();
+patients.fetch();

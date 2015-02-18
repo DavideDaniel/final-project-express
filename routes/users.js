@@ -1,25 +1,28 @@
 var express = require('express');
+var app = require('../app')
 var sqlite3 = require( 'sqlite3' )
 	.verbose();
 var db = new sqlite3.Database( "patients.db" );
-var router = express.Router();
+var usersrouter = express.Router();
+html_dir = './html/'
+
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+usersrouter.get('/', function(req, res, next) {
   res.render('users.ejs', { });
 });
 
-router.get('/consumerEJS', function(req, res, next) {
+usersrouter.get('/consumerEJS', function(req, res, next) {
   res.render('consumer.ejs');
 });
 
-router.get('/consumer', function(req, res, next) {
+usersrouter.get('/consumer', function(req, res, next) {
  res.sendfile(html_dir+'consumer.html')
 
 } );
 
 //GET 1 patient
-router.get('/patients/:id', function(req, res, next) {
+usersrouter.get('/patient/:id', function(req, res, next) {
  var id = req.params.id;
 db.all( "SELECT * FROM patients where id = ?", id, function ( err, rows ) {
 		if ( err ) {
@@ -27,11 +30,11 @@ db.all( "SELECT * FROM patients where id = ?", id, function ( err, rows ) {
 		}
 	var strPatient = JSON.stringify(rows[0])		
 	console.log(strPatient);
-		res.render('consumer.ejs', {patient: strPatient});
+		res.sendfile(html_dir+'consumer.html');
 	} );
 
  
 
 } );
 
-module.exports = router;
+module.exports = usersrouter;

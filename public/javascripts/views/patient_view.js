@@ -1,6 +1,8 @@
 console.log( 'view' );
+
 $( document )
 	.ready( function () {
+		
 		var PatientsListView = Backbone.View.extend( {
 			el: '#patientsList',
 			initialize: function () {
@@ -80,10 +82,8 @@ $( document )
 			}
 		} );
 
-			var ConsumerView = Backbone.View.extend({
-				tagName: ".patient",
-				template: _.template( $( '#consumer' )
-					.html() ),
+			var ConsumersView = Backbone.View.extend({
+				tagName: 'div',
 
 				initialize: function () {
 					this.listenTo( this.collection, 'sync remove', this.render );
@@ -103,6 +103,21 @@ $( document )
 				}
 
 			})
+
+			var ConsumerView = Backbone.View.extend( {
+			tagName: ".patient",
+				template: _.template( $( '#consumer' )
+					.html() ),
+
+			render: function () {
+				this.$el.html( _.template( this.template( {
+						patient: this.model.toJSON()
+					} ) )
+
+				)
+				return this
+			}
+		} );
 
 			var CreatePatientView = Backbone.View.extend( {
 				el: '#addPatientForm',
@@ -134,7 +149,7 @@ $( document )
 				collection: patients
 			} );
 
-		// 	var consumerView = new ConsumerView( {
-		// 		collection: patients
-		// 	} );
+			// var consumerView = new ConsumerView( {
+			// 	model: patient
+			// } );
 	} );

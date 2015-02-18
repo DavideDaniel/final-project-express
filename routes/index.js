@@ -1,26 +1,28 @@
 var express = require( 'express' );
+var app = require('../app')
 var sqlite3 = require( 'sqlite3' )
 	.verbose();
 var db = new sqlite3.Database( "patients.db" );
 var bcrypt = require( "bcrypt" );
-var router = express.Router();
+var indexrouter = express.Router();
 
 html_dir = './html/'
 /* GET home page. */
-router.get( '/', function ( req, res, next ) {
+indexrouter.get( '/', function ( req, res, next ) {
 	res.render( 'index.ejs', {
-		// 			title: 'Express'
 	} )
 } );
+
+
 //GET all patients on provider route
-router.get( '/provider', function ( req, res, next ) {
+indexrouter.get( '/provider', function ( req, res, next ) {
 	// res.sendfile( html_dir + 'provider.html' )
 	res.sendfile( html_dir + 'provider.html' )
 
 } );
 
 //GET 1 patient
-router.get( '/patient/:id', function ( req, res ) {
+indexrouter.get( '/patient/:id', function ( req, res ) {
 	var id = req.params.id;
 	db.all( "SELECT * FROM patients where id = ?", id, function ( err, rows ) {
 		if ( err ) {
@@ -35,16 +37,17 @@ router.get( '/patient/:id', function ( req, res ) {
 
 //CRUD routes for patients - admin side
 //GET all patients
-router.get( '/patients', function ( req, res ) {
+indexrouter.get( '/patients', function ( req, res ) {
 	db.all( "SELECT * FROM patients", function ( err, rows ) {
 		if ( err ) {
 			throw err;
 		}
 		res.json( rows );
+		console.log(rows);
 	} );
 } );
 //POST to all patients
-router.post( '/patients', function ( req, res ) {
+indexrouter.post( '/patients', function ( req, res ) {
 	var name = req.body.name;
 	var dob = req.body.dob;
 	console.log( name + 'is :' + dob );
@@ -63,7 +66,7 @@ router.post( '/patients', function ( req, res ) {
 	} );
 } );
 //DELETE a patient with :id
-router.delete( '/patient/:id', function ( req, res ) {
+indexrouter.delete( '/patients/:id', function ( req, res ) {
 	var id = req.params.id;
 
 	db.run( "DELETE FROM patients WHERE id = ?", id,
@@ -77,7 +80,7 @@ router.delete( '/patient/:id', function ( req, res ) {
 		} );
 } );
 //UPDATE a patiend with :id
-router.put( "/patient/:id", function ( req, res ) {
+indexrouter.put( "/patients/:id", function ( req, res ) {
 	console.log( "INSIDE THE EDIT ROUTE" );
 	var id = req.params.id;
 	var name = req.body.name;
@@ -97,8 +100,8 @@ router.put( "/patient/:id", function ( req, res ) {
 		} );
 } );
 
-// router.get( '/provider', function ( req, res, next ) {
+// indexrouter.get( '/provider', function ( req, res, next ) {
 // 			res.sendFile( 'provider.html', {root: '/html'} );
 // 		})
 
-module.exports = router;
+module.exports = indexrouter;
