@@ -2,6 +2,7 @@ console.log( "patient" );
 var Patient = Backbone.RelationalModel.extend( {
 
 	urlRoot: 'http://localhost:3000/patient',
+	collection: 'patients'
 	idAttribute: '_id',
 	relations: [{
 		type: Backbone.HasMany,

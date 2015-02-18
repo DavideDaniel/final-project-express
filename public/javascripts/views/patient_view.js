@@ -1,7 +1,7 @@
 console.log( 'view' );
 $( document )
 	.ready( function () {
-		var PatientsView = Backbone.View.extend( {
+		var PatientsListView = Backbone.View.extend( {
 			el: '#patientsList',
 			initialize: function () {
 				this.listenTo( this.collection, 'sync remove', this.render );
@@ -80,71 +80,61 @@ $( document )
 			}
 		} );
 
-		var ConsumerView = Backbone.View.extend({
-			tagName: ".patient",
-			template: _.template( $( '#consumer' )
-				.html() ),
+			var ConsumerView = Backbone.View.extend({
+				tagName: ".patient",
+				template: _.template( $( '#consumer' )
+					.html() ),
 
+				initialize: function () {
+					this.listenTo( this.collection, 'sync remove', this.render );
+				},
 
-			initialize: function () {
-				this.listenTo( this.collection, 'sync remove', this.render );
-			},
+				render: function () {
+					var el = this.$el;
+					el.html( '' );
+					this.collection.each( function ( patient ) {
+						el.append( new ConsumerView( {
+								model: patient
+							} )
+							.render()
+							.el );
+					} )
+					return this;
+				}
 
-			render: function () {
-				var el = this.$el;
-				el.html( '' );
-				this.collection.each( function ( patient ) {
-					el.append( new ConsumerView( {
-							model: patient
-						} )
-						.render()
-						.el );
-				} )
-				return this;
-			},
+			})
 
-				this.$el.html( _.template( this.template( {
-						patient: this.model.toJSON()
-					} ) )
+			var CreatePatientView = Backbone.View.extend( {
+				el: '#addPatientForm',
+				events: {
+					'click #addNewPatient': 'createPatient'
+				},
+				createPatient: function () {
+					var nameField = this.$( '#newPatientName' );
+					var dobField = this.$( '#newPatientDob' );
+					var newPatientName = nameField.val();
+					var newPatientDob = dobField.val();
 
-				)
-				return this
-			}
+					this.collection.create( {
+						name: newPatientName,
+						dob: newPatientDob
+					} );
 
+					nameField.val( '' );
+					dobField.val( '' );
+				}
 
-		})
+			} );
 
-		var CreatePatientView = Backbone.View.extend( {
-			el: '#addPatientForm',
-			events: {
-				'click #addNewPatient': 'createPatient'
-			},
-			createPatient: function () {
-				var nameField = this.$( '#newPatientName' );
-				var dobField = this.$( '#newPatientDob' );
-				var newPatientName = nameField.val();
-				var newPatientDob = dobField.val();
+			var create_patient_view = new CreatePatientView( {
+				collection: patients
+			} );
 
-				this.collection.create( {
-					name: newPatientName,
-					dob: newPatientDob
-				} );
+			var patients_list_view = new PatientsListView( {
+				collection: patients
+			} );
 
-				nameField.val( '' );
-				dobField.val( '' );
-			}
-
-		} );
-
-		var createPatientView = new CreatePatientView( {
-			collection: patients
-		} );
-
-		var patientsView = new PatientsView( {
-			collection: patients
-		} );
-
-		var consumerView = new ConsumerView( {
-			collection: patients
-		} );
+		// 	var consumerView = new ConsumerView( {
+		// 		collection: patients
+		// 	} );
 	} );

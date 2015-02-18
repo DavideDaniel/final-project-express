@@ -20,7 +20,7 @@ router.get( '/provider', function ( req, res, next ) {
 } );
 
 //GET 1 patient
-router.get( '/patients/:id', function ( req, res ) {
+router.get( '/patient/:id', function ( req, res ) {
 	var id = req.params.id;
 	db.all( "SELECT * FROM patients where id = ?", id, function ( err, rows ) {
 		if ( err ) {
@@ -63,7 +63,7 @@ router.post( '/patients', function ( req, res ) {
 	} );
 } );
 //DELETE a patient with :id
-router.delete( '/patients/:id', function ( req, res ) {
+router.delete( '/patient/:id', function ( req, res ) {
 	var id = req.params.id;
 
 	db.run( "DELETE FROM patients WHERE id = ?", id,
@@ -77,7 +77,7 @@ router.delete( '/patients/:id', function ( req, res ) {
 		} );
 } );
 //UPDATE a patiend with :id
-router.put( "/patients/:id", function ( req, res ) {
+router.put( "/patient/:id", function ( req, res ) {
 	console.log( "INSIDE THE EDIT ROUTE" );
 	var id = req.params.id;
 	var name = req.body.name;

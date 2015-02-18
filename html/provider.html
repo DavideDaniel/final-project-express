@@ -6,11 +6,10 @@
     <body>
     <script src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
         <script src="http://documentcloud.github.com/backbone/backbone-min.js"></script>
-
-        <script src = "./javascripts/models/patient.js"></script>
-        <script src = "./javascripts/collections/patient_collection.js"></script>
+        <script src = "./javascripts/backbone-relational.js"></script>
+        <script src = "./javascripts/models/models.js"></script>
         <script src = "./javascripts/views/patient_view.js"></script>
-
+        
         <ul id="patientsList"></ul>
         <h3>Provider: Add a patient here:</h3>
         <div id = "addPatientForm">
@@ -35,7 +34,7 @@
                     </span>
         </script>
 
-        <script id="consumer">
+        <script type = "text/template" id="consumer">
         <h1 class = "patient">
         <%= patient.name  %>
         </script>
