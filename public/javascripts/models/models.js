@@ -40,7 +40,7 @@ var Provider = Backbone.RelationalModel.extend( {
 console.log( "patient" );
 var Patient = Backbone.RelationalModel.extend( {
 
-    urlRoot: 'http://localhost:3000/patient',
+    urlRoot: 'http://localhost:3000/patients',
     idAttribute: '_id',
     relations: [ {
         // type: Backbone.HasMany,

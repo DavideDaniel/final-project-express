@@ -10,7 +10,7 @@ var adminrouter = express.Router();
 
 var trelloKey = process.env.TRELLO_KEY;
 
-adminrouter.get( '/trello/board', function ( req, res ) {
+adminrouter.get( '/cards', function ( req, res ) {
 
 	var boardUrl =
 		'https://api.trello.com/1/members/daviddaniel6?&boards=all&key=' + trelloKey
